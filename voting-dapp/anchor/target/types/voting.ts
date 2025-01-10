@@ -168,11 +168,7 @@ export type Voting = {
             "type": "string"
           },
           {
-            "name": "pollId",
-            "type": "u64"
-          },
-          {
-            "name": "votes",
+            "name": "candidateVotes",
             "type": "u64"
           }
         ]
