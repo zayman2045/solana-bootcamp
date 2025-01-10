@@ -69,7 +69,7 @@ describe("Voting", () => {
     );
 
     expect(lebronAccount.candidateVotes.toNumber()).toEqual(0);
-    expect(lebronAccount.candidateName).toEqual("Lebron James");
+    expect(lebronAccount.candidateName).toEqual("LeBron James");
 
     const [curryAddress] = await PublicKey.findProgramAddressSync(
       [
