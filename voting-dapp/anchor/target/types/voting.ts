@@ -27,7 +27,7 @@ export type Voting = {
       ],
       "accounts": [
         {
-          "name": "payer",
+          "name": "signer",
           "writable": true,
           "signer": true
         },
@@ -51,6 +51,18 @@ export type Voting = {
       "args": [
         {
           "name": "pollId",
+          "type": "u64"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "pollStart",
+          "type": "u64"
+        },
+        {
+          "name": "pollEnd",
           "type": "u64"
         }
       ]
