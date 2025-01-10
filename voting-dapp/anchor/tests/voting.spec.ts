@@ -68,6 +68,9 @@ describe("Voting", () => {
       lebronAddress
     );
 
+    expect(lebronAccount.candidateVotes.toNumber()).toEqual(0);
+    expect(lebronAccount.candidateName).toEqual("Lebron James");
+
     const [curryAddress] = await PublicKey.findProgramAddressSync(
       [
         new anchor.BN(1).toArrayLike(Buffer, "le", 8),
@@ -79,6 +82,9 @@ describe("Voting", () => {
     const curryAccount = await votingProgram.account.candidate.fetch(
       curryAddress
     );
+
+    expect(curryAccount.candidateName).toEqual("Stephen Curry");
+    expect(curryAccount.candidateVotes.toNumber()).toEqual(0);
   });
 
   it("Vote", async () => {});
