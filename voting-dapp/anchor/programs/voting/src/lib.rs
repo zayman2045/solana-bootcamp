@@ -21,7 +21,7 @@ pub struct InitializePoll<'info> {
     pub payer: Signer<'info>,
     #[account(init, payer=payer, space=ANCHOR_SPACE_DISCRIMINATOR + Poll::INIT_SPACE, seeds=[poll_id.to_le_bytes().as_ref()], bump)]
     pub poll: Account<'info, Poll>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
@@ -32,5 +32,5 @@ pub struct Poll {
     pub description: String,
     pub poll_start: u64,
     pub poll_end: u64,
-    pub candidate_amount: u64
+    pub candidate_amount: u64,
 }
