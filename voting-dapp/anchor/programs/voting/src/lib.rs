@@ -9,7 +9,13 @@ const ANCHOR_SPACE_DISCRIMINATOR: usize = 8;
 pub mod voting {
     use super::*;
 
-    pub fn initialize_poll(_ctx: Context<InitializePoll>, _poll_id: u64) -> Result<()> {
+    pub fn initialize_poll(ctx: Context<InitializePoll>, poll_id: u64, description: String, poll_start: u64, poll_end: u64) -> Result<()> {
+        let poll = &mut ctx.accounts.poll;
+        poll.poll_id = poll_id;
+        poll.description = description;
+        poll.poll_start = poll_start;
+        poll.poll_end = poll_end;
+        poll.candidate_amount = 0;
         Ok(())
     }
 }
@@ -18,8 +24,8 @@ pub mod voting {
 #[instruction(poll_id: u64)]
 pub struct InitializePoll<'info> {
     #[account(mut)]
-    pub payer: Signer<'info>,
-    #[account(init, payer=payer, space=ANCHOR_SPACE_DISCRIMINATOR + Poll::INIT_SPACE, seeds=[poll_id.to_le_bytes().as_ref()], bump)]
+    pub signer: Signer<'info>,
+    #[account(init, payer=signer, space=ANCHOR_SPACE_DISCRIMINATOR + Poll::INIT_SPACE, seeds=[poll_id.to_le_bytes().as_ref()], bump)]
     pub poll: Account<'info, Poll>,
     pub system_program: Program<'info, System>,
 }
