@@ -42,8 +42,6 @@ describe("Voting", () => {
 
     const poll = await votingProgram.account.poll.fetch(pollAddress);
 
-    console.log(poll);
-
     expect(poll.pollId.toNumber()).toEqual(1);
     expect(poll.description).toEqual("Who is your favorite basketball player?");
     expect(poll.pollStart.toNumber()).toBeLessThan(poll.pollEnd.toNumber());
@@ -66,7 +64,9 @@ describe("Voting", () => {
       votingAddress
     );
 
-    const lebronAccount = await votingProgram.account.candidate.fetch(lebronAddress);
+    const lebronAccount = await votingProgram.account.candidate.fetch(
+      lebronAddress
+    );
 
     const [curryAddress] = await PublicKey.findProgramAddressSync(
       [
@@ -76,9 +76,9 @@ describe("Voting", () => {
       votingAddress
     );
 
-    const curryAccount = await votingProgram.account.candidate.fetch(curryAddress);
-
-    console.log(lebronAccount, curryAccount);
+    const curryAccount = await votingProgram.account.candidate.fetch(
+      curryAddress
+    );
   });
 
   it("Vote", async () => {});
