@@ -1,7 +1,7 @@
 #![allow(clippy::result_large_err)]
 use anchor_lang::prelude::*;
 
-declare_id!("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
+declare_id!("2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo");
 
 #[program]
 pub mod voting {
