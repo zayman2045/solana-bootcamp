@@ -1,0 +1,49 @@
+Streaming transaction logs mentioning 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo. Confirmed commitment
+Transaction executed in slot 130882:
+  Signature: Q5WjBznxgh8XyXkAZ3BM1nyvqfwvgMwJ5WPaXsdXqUkvfBu1HoRHKfcVMyAPRmze1CXoEuyHF3SEisw9WdWo49F
+  Status: Ok
+  Log Messages:
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo invoke [1]
+    Program log: Instruction: InitializePoll
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo consumed 8040 of 200000 compute units
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo success
+Transaction executed in slot 130883:
+  Signature: 31ypNBLBwpDfhDWqHBQBusXaxF1UmhvkbcDTJNcsVvTh6VksqSMYxjH8sBd8Hsm5qccsxXB1p1m6AZMzyKfyqwh
+  Status: Ok
+  Log Messages:
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo invoke [1]
+    Program log: Instruction: InitializeCandidate
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo consumed 12515 of 200000 compute units
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo success
+Transaction executed in slot 130883:
+  Signature: 4HdaQmKBWGdJXm5FGkDoeD3NNtzx6FL1T9eDjK43pUjRn28WWb9LVNdCcGDLpn8T9EWMRhy7Un2AT9V2peiZYQoj
+  Status: Ok
+  Log Messages:
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo invoke [1]
+    Program log: Instruction: InitializeCandidate
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo consumed 14041 of 200000 compute units
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo success
+Transaction executed in slot 130884:
+  Signature: 4HdaQmKBWGdJXm5FGkDoeD3NNtzx6FL1T9eDjK43pUjRn28WWb9LVNdCcGDLpn8T9EWMRhy7Un2AT9V2peiZYQoj
+  Status: Ok
+  Log Messages:
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo invoke [1]
+    Program log: Instruction: InitializeCandidate
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo consumed 14041 of 200000 compute units
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo success
+Transaction executed in slot 130885:
+  Signature: 5SCdkJHBj1xaADs1R8LxFBLgEpQWgdQSmvGjpwGwo25ZzdjHCzDTinyE8WiECokV7fP7cy37PnxcrQ3e66KaLmX6
+  Status: Ok
+  Log Messages:
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo invoke [1]
+    Program log: Instruction: Vote
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo consumed 5252 of 200000 compute units
+    Program 2Q11KevbxUyKxMYCk5yQHG8yizMPwZFwS1BAzofrAAFo success
