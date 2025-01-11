@@ -87,5 +87,21 @@ describe("Voting", () => {
     expect(curryAccount.candidateVotes.toNumber()).toEqual(0);
   });
 
-  it("Vote", async () => {});
+  it("Vote", async () => {
+    await votingProgram.methods.vote("LeBron James", new anchor.BN(1)).rpc();
+
+    const [lebronAddress] = PublicKey.findProgramAddressSync(
+      [
+        new anchor.BN(1).toArrayLike(Buffer, "le", 8),
+        Buffer.from("LeBron James"),
+      ],
+      votingAddress
+    );
+
+    const lebronAccount = await votingProgram.account.candidate.fetch(
+      lebronAddress
+    );
+
+    expect(lebronAccount.candidateVotes.toNumber()).toEqual(1);
+  });
 });
