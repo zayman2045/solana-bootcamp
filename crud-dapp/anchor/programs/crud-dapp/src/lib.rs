@@ -10,8 +10,14 @@ pub mod crud_dapp {
 
     pub fn create_entry(ctx: Context<CreateEntry>, title: String, message: String) -> Result<()> {
         let entry = &mut ctx.accounts.entry;
-        entry.owner = ctx.accounts.user.key();
+        entry.owner = ctx.accounts.owner.key();
         entry.title = title;
+        entry.message = message;
+        Ok(())
+    }
+
+    pub fn update_entry(ctx: Context<UpdateEntry>, _title: String, message: String) -> Result<()> {
+        let entry = &mut ctx.accounts.entry;
         entry.message = message;
         Ok(())
     }
@@ -21,9 +27,19 @@ pub mod crud_dapp {
 #[instruction(title: String)]
 pub struct CreateEntry<'info> {
     #[account(mut)]
-    pub user: Signer<'info>,
-    #[account(init, payer = user,space = 8 + Entry::INIT_SPACE, seeds = [title.as_bytes(), user.key().as_ref()], bump)]
+    pub owner: Signer<'info>,
+    #[account(init, payer = owner,space = 8 + Entry::INIT_SPACE, seeds = [title.as_bytes(), owner.key().as_ref()], bump)]
     pub entry: Account<'info, Entry>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+#[instruction(title: String)]
+pub struct UpdateEntry<'info> {
+    #[account(mut, realloc = 8 + Entry::INIT_SPACE, realloc::payer = owner, realloc::zero = true,  seeds = [title.as_bytes(), owner.key().as_ref()], bump)]
+    pub entry: Account<'info, Entry>,
+    #[account(mut)]
+    pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
