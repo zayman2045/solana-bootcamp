@@ -21,6 +21,10 @@ pub mod crud_dapp {
         entry.message = message;
         Ok(())
     }
+
+    pub fn delete_entry(_ctx: Context<DeleteEntry>, _title: String) -> Result<()> {
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -37,6 +41,18 @@ pub struct CreateEntry<'info> {
 #[instruction(title: String)]
 pub struct UpdateEntry<'info> {
     #[account(mut, realloc = 8 + Entry::INIT_SPACE, realloc::payer = owner, realloc::zero = true,  seeds = [title.as_bytes(), owner.key().as_ref()], bump)]
+    pub entry: Account<'info, Entry>,
+    #[account(mut)]
+    pub owner: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+#[instruction(title: String)]
+pub struct DeleteEntry<'info> {
+    #[account(mut, 
+        seeds = [title.as_bytes(), owner.key().as_ref()], bump,
+        close = owner)]
     pub entry: Account<'info, Entry>,
     #[account(mut)]
     pub owner: Signer<'info>,
