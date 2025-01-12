@@ -12,7 +12,7 @@ describe("Crud", () => {
   const crudProgram = anchor.workspace.Crud as Program<Crud>;
 
   it("Create entry", async () => {
-    // await crudProgram.methods.createEntry("My Title", "My Message").rpc();
+    await crudProgram.methods.createEntry("My Title", "My Message").rpc();
 
     const [entryAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("My Title"), payer.publicKey.toBytes()],
@@ -23,5 +23,10 @@ describe("Crud", () => {
 
     expect(entryAccount.message).toEqual("My Message");
     expect(entryAccount.title).toEqual("My Title");
+  });
+
+  it("Delete entry", async () => {
+    const result = await crudProgram.methods.deleteEntry("My Title").rpc();
+    console.log(result);
   });
 });
