@@ -5,7 +5,7 @@ use anchor_lang::prelude::*;
 declare_id!("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
 
 #[program]
-pub mod crud_dapp {
+pub mod crud {
     use super::*;
 
     pub fn create_entry(ctx: Context<CreateEntry>, title: String, message: String) -> Result<()> {
