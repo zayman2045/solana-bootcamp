@@ -55,7 +55,7 @@ const transaction = await createNft(umi, {
   mint: collectionMint,
   name: "My Collection",
   symbol: "MC",
-  uri: "https://...",
+  uri: "https://raw.githubusercontent.com/zayman2045/solana-bootcamp/refs/heads/main/new-nft/ravens-nft.json",
   sellerFeeBasisPoints: percentAmount(0),
   isCollection: true,
 });
