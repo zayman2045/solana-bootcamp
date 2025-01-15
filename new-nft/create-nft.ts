@@ -12,12 +12,7 @@ import {
 
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 
-import {
-  Connection,
-  LAMPORTS_PER_SOL,
-  PublicKey,
-  clusterApiUrl,
-} from "@solana/web3.js";
+import { Connection, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
 
 import {
   generateSigner,
@@ -60,8 +55,10 @@ const collectionAddress = publicKey(
 
 console.log(`Creating NFT...`);
 
+// Generate a keypair for the NFT mint
 const mint = generateSigner(umi);
 
+// Create the NFT transaction
 const transaction = await createNft(umi, {
   mint,
   name: "Ravens",
@@ -72,3 +69,17 @@ const transaction = await createNft(umi, {
     verified: false,
   },
 });
+
+// Send and confirm the transaction
+await transaction.sendAndConfirm(umi);
+
+// Fetch the created NFT
+const createdNft = await fetchDigitalAsset(umi, mint.publicKey);
+
+console.log(
+  `Created NFT! 🖼️ Address is: ${getExplorerLink(
+    "transaction",
+    createdNft.mint.publicKey,
+    "devnet"
+  )}`
+);
