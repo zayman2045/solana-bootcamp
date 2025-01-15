@@ -14,7 +14,11 @@ import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 
 import { Connection, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
 
-import { keypairIdentity } from "@metaplex-foundation/umi";
+import {
+  generateSigner,
+  keypairIdentity,
+  percentAmount,
+} from "@metaplex-foundation/umi";
 
 // Create a connection to the cluster
 const connection = new Connection(clusterApiUrl("devnet"));
@@ -33,12 +37,42 @@ await airdropIfRequired(
 // Log the user public key
 console.log("Loaded user", user.publicKey.toBase58());
 
-// Create Umi instance
+// Create Umi instance to interact with the Metaplex API
 const umi = createUmi(connection.rpcEndpoint);
 umi.use(mplTokenMetadata());
 
+// Set up Umi instance to use the user keypair for signing
 const umiUser = umi.eddsa.createKeypairFromSecretKey(user.secretKey);
 umi.use(keypairIdentity(umiUser));
 
 console.log("Set up Umi instance for user");
 
+// Generate a keypair for the collection mint
+const collectionMint = generateSigner(umi);
+
+// Create the collection transaction
+const transaction = await createNft(umi, {
+  mint: collectionMint,
+  name: "My Collection",
+  symbol: "MC",
+  uri: "https://...",
+  sellerFeeBasisPoints: percentAmount(0),
+  isCollection: true,
+});
+
+// Send and confirm the transaction
+await transaction.sendAndConfirm(umi);
+
+// Fetch the created collection
+const createdCollectionNft = await fetchDigitalAsset(
+  umi,
+  collectionMint.publicKey
+);
+
+console.log(
+  `Created Collection 📦! Address: ${getExplorerLink(
+    "address",
+    createdCollectionNft.mint.publicKey,
+    "devnet"
+  )}`
+);
