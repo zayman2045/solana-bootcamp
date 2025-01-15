@@ -62,7 +62,7 @@ const mint = generateSigner(umi);
 const transaction = await createNft(umi, {
   mint,
   name: "Ravens",
-  uri: "https://...",
+  uri: "https://raw.githubusercontent.com/zayman2045/solana-bootcamp/refs/heads/main/new-nft/ravens-vangogh-metadata-1.json",
   sellerFeeBasisPoints: percentAmount(0),
   collection: {
     key: collectionAddress,
