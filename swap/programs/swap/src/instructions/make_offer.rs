@@ -6,9 +6,20 @@ use anchor_spl::{
     token_interface::{Mint, TokenAccount, TokenInterface},
 };
 
-pub fn send_offered_tokens_to_vault() -> Result<()> {
-    // This is a stub function that will be filled in later
-    Ok(())
+use super::transfer_tokens;
+
+pub fn send_offered_tokens_to_vault(
+    context: &Context<MakeOffer>,
+    token_a_offered_amount: u64,
+) -> Result<()> {
+    transfer_tokens(
+        &context.accounts.token_maker_account_a,
+        &context.accounts.vault,
+        &token_a_offered_amount,
+        &context.accounts.token_mint_a,
+        &context.accounts.maker,
+        &context.accounts.token_program,
+    )
 }
 
 pub fn save_offer() -> Result<()> {
@@ -30,7 +41,7 @@ pub struct MakeOffer<'info> {
     pub token_mint_b: InterfaceAccount<'info, Mint>,
 
     #[account(mut, associated_token::mint = token_mint_a, associated_token::authority = maker, associated_token::token_program = token_program)]
-    pub token_maker_account: InterfaceAccount<'info, TokenAccount>,
+    pub token_maker_account_a: InterfaceAccount<'info, TokenAccount>,
 
     #[account(init, payer = maker, space = ANCHOR_DISCRIMINATOR + Offer::INIT_SPACE, seeds = [b"offer", maker.key().as_ref(), id.to_le_bytes().as_ref()], bump)]
     pub offer: Account<'info, Offer>,
