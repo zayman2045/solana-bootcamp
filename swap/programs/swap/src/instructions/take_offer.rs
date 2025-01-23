@@ -8,6 +8,7 @@ use super::transfer_tokens;
 use crate::{Offer, ANCHOR_DISCRIMINATOR};
 
 #[derive(Accounts)]
+#[instruction(id: u64)]
 pub struct TakeOffer<'info> {
     // The taker of the offer
     #[account(mut)]
@@ -47,8 +48,24 @@ pub struct TakeOffer<'info> {
     pub maker_token_account_b: InterfaceAccount<'info, TokenAccount>,
 
     // The offer account
-    #[account(mut, close = maker)]
+    #[account(
+        mut, 
+        close = maker,
+        has_one = maker,
+        has_one = token_mint_a,
+        has_one = token_mint_b,
+        seeds = [b"offer", maker.key().as_ref(), id.to_le_bytes().as_ref()],
+        bump
+    )]
     pub offer: Account<'info, Offer>,
+
+    // The vault account that holds the offered tokens
+    #[account(mut,
+        associated_token::mint = token_mint_a,
+        associated_token::authority = offer,
+        associated_token::token_program = token_program
+    )]
+    pub vault: InterfaceAccount<'info, TokenAccount>,
 
     // Used to create accounts
     pub system_program: Program<'info, System>,
