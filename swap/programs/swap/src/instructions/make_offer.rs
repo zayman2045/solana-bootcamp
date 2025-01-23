@@ -1,5 +1,3 @@
-use crate::constants::ANCHOR_DISCRIMINATOR;
-use crate::state::Offer;
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
@@ -7,6 +5,7 @@ use anchor_spl::{
 };
 
 use super::transfer_tokens;
+use crate::{Offer, ANCHOR_DISCRIMINATOR};
 
 /// Sends the offered tokens to the vault account.
 pub fn send_offered_tokens_to_vault(
@@ -23,8 +22,17 @@ pub fn send_offered_tokens_to_vault(
     )
 }
 
-pub fn save_offer() -> Result<()> {
-    // This is a stub function that will be filled in later
+/// Saves the offer to the account on chain.
+pub fn save_offer(context: Context<MakeOffer>, id: u64, token_b_wanted_amount: u64) -> Result<()> {
+    context.accounts.offer.set_inner(Offer {
+        id,
+        maker: context.accounts.maker.key(),
+        token_mint_a: context.accounts.token_mint_a.key(),
+        token_mint_b: context.accounts.token_mint_b.key(),
+        token_b_wanted_amount,
+        bump: context.bumps.offer,
+    });
+
     Ok(())
 }
 
