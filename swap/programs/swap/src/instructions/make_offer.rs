@@ -39,7 +39,7 @@ pub fn save_offer(context: Context<MakeOffer>, id: u64, token_b_wanted_amount: u
 #[derive(Accounts)]
 #[instruction(id: u64)]
 pub struct MakeOffer<'info> {
-    // The maker of the offer
+    // The maker of the offer 
     #[account(mut)]
     pub maker: Signer<'info>,
 
