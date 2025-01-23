@@ -8,6 +8,7 @@ use anchor_spl::{
 
 use super::transfer_tokens;
 
+/// Sends the offered tokens to the vault account.
 pub fn send_offered_tokens_to_vault(
     context: &Context<MakeOffer>,
     token_a_offered_amount: u64,
