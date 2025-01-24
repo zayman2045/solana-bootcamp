@@ -1,7 +1,13 @@
-{
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/vesting.json`.
+ */
+export type Vesting = {
   "address": "coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF",
   "metadata": {
-    "name": "counter",
+    "name": "vesting",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
@@ -26,7 +32,7 @@
           "signer": true
         },
         {
-          "name": "counter",
+          "name": "vesting",
           "writable": true
         }
       ],
@@ -46,7 +52,7 @@
       ],
       "accounts": [
         {
-          "name": "counter",
+          "name": "vesting",
           "writable": true
         }
       ],
@@ -66,7 +72,7 @@
       ],
       "accounts": [
         {
-          "name": "counter",
+          "name": "vesting",
           "writable": true
         }
       ],
@@ -91,12 +97,12 @@
           "signer": true
         },
         {
-          "name": "counter",
+          "name": "vesting",
           "writable": true,
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -116,7 +122,7 @@
       ],
       "accounts": [
         {
-          "name": "counter",
+          "name": "vesting",
           "writable": true
         }
       ],
@@ -130,7 +136,7 @@
   ],
   "accounts": [
     {
-      "name": "Counter",
+      "name": "vesting",
       "discriminator": [
         255,
         176,
@@ -145,7 +151,7 @@
   ],
   "types": [
     {
-      "name": "Counter",
+      "name": "vesting",
       "type": {
         "kind": "struct",
         "fields": [
@@ -157,4 +163,4 @@
       }
     }
   ]
-}
+};

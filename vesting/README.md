@@ -1,4 +1,4 @@
-# template-next-tailwind-counter
+# vesting
 
 ## Getting Started
 

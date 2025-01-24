@@ -4,10 +4,10 @@ import { Keypair, PublicKey } from '@solana/web3.js'
 import { useMemo } from 'react'
 import { ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
-import { useCounterProgram, useCounterProgramAccount } from './counter-data-access'
+import { useVestingProgram, useVestingProgramAccount } from './vesting-data-access'
 
-export function CounterCreate() {
-  const { initialize } = useCounterProgram()
+export function VestingCreate() {
+  const { initialize } = useVestingProgram()
 
   return (
     <button
@@ -20,8 +20,8 @@ export function CounterCreate() {
   )
 }
 
-export function CounterList() {
-  const { accounts, getProgramAccount } = useCounterProgram()
+export function VestingList() {
+  const { accounts, getProgramAccount } = useVestingProgram()
 
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>
@@ -40,7 +40,7 @@ export function CounterList() {
       ) : accounts.data?.length ? (
         <div className="grid md:grid-cols-2 gap-4">
           {accounts.data?.map((account) => (
-            <CounterCard key={account.publicKey.toString()} account={account.publicKey} />
+            <VestingCard key={account.publicKey.toString()} account={account.publicKey} />
           ))}
         </div>
       ) : (
@@ -53,8 +53,8 @@ export function CounterList() {
   )
 }
 
-function CounterCard({ account }: { account: PublicKey }) {
-  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useCounterProgramAccount({
+function VestingCard({ account }: { account: PublicKey }) {
+  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useVestingProgramAccount({
     account,
   })
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { getCounterProgram, getCounterProgramId } from '@project/anchor'
+import { getVestingProgram, getVestingProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -10,17 +10,17 @@ import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../ui/ui-layout'
 
-export function useCounterProgram() {
+export function useVestingProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
-  const programId = useMemo(() => getCounterProgramId(cluster.network as Cluster), [cluster])
-  const program = useMemo(() => getCounterProgram(provider, programId), [provider, programId])
+  const programId = useMemo(() => getVestingProgramId(cluster.network as Cluster), [cluster])
+  const program = useMemo(() => getVestingProgram(provider, programId), [provider, programId])
 
   const accounts = useQuery({
-    queryKey: ['counter', 'all', { cluster }],
-    queryFn: () => program.account.counter.all(),
+    queryKey: ['vesting', 'all', { cluster }],
+    queryFn: () => program.account.vesting.all(),
   })
 
   const getProgramAccount = useQuery({
@@ -29,9 +29,9 @@ export function useCounterProgram() {
   })
 
   const initialize = useMutation({
-    mutationKey: ['counter', 'initialize', { cluster }],
+    mutationKey: ['vesting', 'initialize', { cluster }],
     mutationFn: (keypair: Keypair) =>
-      program.methods.initialize().accounts({ counter: keypair.publicKey }).signers([keypair]).rpc(),
+      program.methods.initialize().accounts({ vesting: keypair.publicKey }).signers([keypair]).rpc(),
     onSuccess: (signature) => {
       transactionToast(signature)
       return accounts.refetch()
@@ -48,19 +48,19 @@ export function useCounterProgram() {
   }
 }
 
-export function useCounterProgramAccount({ account }: { account: PublicKey }) {
+export function useVestingProgramAccount({ account }: { account: PublicKey }) {
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
-  const { program, accounts } = useCounterProgram()
+  const { program, accounts } = useVestingProgram()
 
   const accountQuery = useQuery({
-    queryKey: ['counter', 'fetch', { cluster, account }],
-    queryFn: () => program.account.counter.fetch(account),
+    queryKey: ['vesting', 'fetch', { cluster, account }],
+    queryFn: () => program.account.vesting.fetch(account),
   })
 
   const closeMutation = useMutation({
-    mutationKey: ['counter', 'close', { cluster, account }],
-    mutationFn: () => program.methods.close().accounts({ counter: account }).rpc(),
+    mutationKey: ['vesting', 'close', { cluster, account }],
+    mutationFn: () => program.methods.close().accounts({ vesting: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accounts.refetch()
@@ -68,8 +68,8 @@ export function useCounterProgramAccount({ account }: { account: PublicKey }) {
   })
 
   const decrementMutation = useMutation({
-    mutationKey: ['counter', 'decrement', { cluster, account }],
-    mutationFn: () => program.methods.decrement().accounts({ counter: account }).rpc(),
+    mutationKey: ['vesting', 'decrement', { cluster, account }],
+    mutationFn: () => program.methods.decrement().accounts({ vesting: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()
@@ -77,8 +77,8 @@ export function useCounterProgramAccount({ account }: { account: PublicKey }) {
   })
 
   const incrementMutation = useMutation({
-    mutationKey: ['counter', 'increment', { cluster, account }],
-    mutationFn: () => program.methods.increment().accounts({ counter: account }).rpc(),
+    mutationKey: ['vesting', 'increment', { cluster, account }],
+    mutationFn: () => program.methods.increment().accounts({ vesting: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()
@@ -86,8 +86,8 @@ export function useCounterProgramAccount({ account }: { account: PublicKey }) {
   })
 
   const setMutation = useMutation({
-    mutationKey: ['counter', 'set', { cluster, account }],
-    mutationFn: (value: number) => program.methods.set(value).accounts({ counter: account }).rpc(),
+    mutationKey: ['vesting', 'set', { cluster, account }],
+    mutationFn: (value: number) => program.methods.set(value).accounts({ vesting: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()
