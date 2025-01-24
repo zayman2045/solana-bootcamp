@@ -1,7 +1,7 @@
 #![allow(clippy::result_large_err)]
 
 use anchor_lang::prelude::*;
-use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
+use anchor_spl::{associated_token::AssociatedToken, token_interface::{Mint, TokenAccount, TokenInterface}};
 
 pub const ANCHOR_DISCRIMINATOR: usize = 8;
 
@@ -60,7 +60,7 @@ pub mod vesting {
 pub struct CreateVestingAccount<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
-    
+
     // This account is used to store the vesting account data
     #[account(init, payer = signer, space = ANCHOR_DISCRIMINATOR + VestingAccount::INIT_SPACE, seeds = [company_name.as_ref()], bump)]
     pub vesting_account: Account<'info, VestingAccount>,
@@ -80,7 +80,6 @@ pub struct CreateVestingAccount<'info> {
     pub treasury_token_account: InterfaceAccount<'info, TokenAccount>,
 
     pub system_program: Program<'info, System>,
-
     pub token_program: Interface<'info, TokenInterface>,
 }
 
@@ -109,7 +108,7 @@ pub struct CreateEmployeeAccount<'info> {
   pub system_program: Program<'info, System>
 }
 
-/// 
+/// Claims tokens from the employee account.
 #[derive(Accounts)]
 #[instruction(company_name: String)]
 pub struct ClaimTokens<'info> {
@@ -138,6 +137,19 @@ pub struct ClaimTokens<'info> {
 
   #[account(mut)]
   pub treasury_token_account: InterfaceAccount<'info, TokenAccount>,
+
+  #[account(
+    init_if_needed,
+    payer = beneficiary,
+    associated_token::mint = mint,
+    associated_token::authority = beneficiary,
+    associated_token::token_program = token_program,
+  )]
+  pub employee_token_account: InterfaceAccount<'info, TokenAccount>,
+
+  pub system_program: Program<'info, System>,
+  pub token_program: Interface<'info, TokenInterface>,
+  pub associated_token_program: Program<'info, AssociatedToken>
 }
 
 /// Contains the vesting account data.
