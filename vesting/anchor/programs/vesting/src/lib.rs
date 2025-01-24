@@ -11,7 +11,7 @@ declare_id!("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
 pub mod vesting {
     use super::*;
 
-    /// Initializes a new vesting account and treasury token account, and updates the vesting account data
+    /// Initializes a new vesting account and treasury token account, and sets the initial vesting account data
     pub fn create_vesting_account(
         ctx: Context<CreateVestingAccount>,
         company_name: String,
@@ -26,6 +26,7 @@ pub mod vesting {
         };
         Ok(())
     }
+
 }
 
 /// Initializes a vesting account and a token account to act as the treasury
@@ -57,6 +58,18 @@ pub struct CreateVestingAccount<'info> {
     pub token_program: Interface<'info, TokenInterface>,
 }
 
+#[derive(Accounts)]
+pub struct CreateEmployeeAccount<'info> {
+  #[account(mut)]
+  pub owner: Signer<'info>,
+  pub beneficiary: SystemAccount<'info>,
+  #[account(has_one = owner)]
+  pub vesting_account: Account<'info, VestingAccount>,
+  #[account(init, payer = owner, space = ANCHOR_DISCRIMINATOR + EmployeeAccount::INIT_SPACE, seeds = [b"employee_vesting", beneficiary.key().as_ref()], bump)]
+  pub employee_account: Account<'info, EmployeeAccount>, 
+  pub system_program: Program<'info, System>
+}
+
 /// Contains the vesting account data
 #[account]
 #[derive(InitSpace)]
@@ -81,4 +94,5 @@ pub struct EmployeeAccount {
   pub vesting_account: Pubkey,
   pub total_amount: u64,
   pub total_withdrawn: u64,
+  pub bump: u8,
 }
