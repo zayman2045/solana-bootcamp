@@ -27,6 +27,21 @@ pub mod vesting {
         Ok(())
     }
 
+    /// Initializes a new employee account and sets the initial employee account data
+    pub fn create_employee_account(ctx: Context<CreateEmployeeAccount>, start_time: i64, end_time: i64, cliff_time: i64, total_amount: u64) -> Result<()> {
+      *ctx.accounts.employee_account = EmployeeAccount {
+        beneficiary: ctx.accounts.beneficiary.key(),
+        start_time,
+        end_time,
+        cliff_time,
+        vesting_account: ctx.accounts.vesting_account.key(),
+        total_amount,
+        total_withdrawn: 0,
+        bump: ctx.bumps.employee_account,
+      };
+
+        Ok(())
+    }
 }
 
 /// Initializes a vesting account and a token account to act as the treasury
