@@ -1,4 +1,4 @@
-pub use anchor_lang::prelude::*;
+use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface, TransferChecked, transfer_checked};
 
 /// Transfers tokens from one account to another.
